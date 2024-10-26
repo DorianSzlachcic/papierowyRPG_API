@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+/papierowyRPG_API/sqlite.db
+/papierowyRPG_API/sqlite.db-shm
+/papierowyRPG_API/sqlite.db-wal
