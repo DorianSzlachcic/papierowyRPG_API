@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 sqlite.db*
+/papierowyRPG_API/sqlite.db
+/papierowyRPG_API/sqlite.db-shm
+/papierowyRPG_API/sqlite.db-wal
