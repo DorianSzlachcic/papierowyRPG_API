@@ -3,6 +3,8 @@
     public class Game
     {
         public int ID { get; set; }
+        public ICollection<History> History { get; } = new List<History>();
+        public ICollection<Character> Character { get; } = new List<Character>();
         public bool IsActive { get; set; }
         public string Name { get; set; }
         public string[] StatsTypeJSON { get; set; }
