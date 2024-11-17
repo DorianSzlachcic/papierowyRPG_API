@@ -6,6 +6,6 @@
         public Character? Character { get; set; }
         public Skill? Skill { get; set; }
         public Item? Items{ get; set; }
-        public int[] stats { get; set; }
+        public int[] Stats { get; set; }
     }
 }
