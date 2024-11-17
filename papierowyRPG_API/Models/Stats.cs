@@ -4,7 +4,7 @@
     {
         public int ID { get; set; }
         public Character? Character { get; set; }
-        public Skills? Skills { get; set; }
+        public Skill? Skill { get; set; }
         public Item? Items{ get; set; }
         public int[] stats { get; set; }
     }

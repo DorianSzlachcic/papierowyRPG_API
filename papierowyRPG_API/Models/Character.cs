@@ -3,8 +3,8 @@
     public class Character
     {
         public int ID { get; set; }
-        public Notes? Notes { get; set; }
-        public ICollection<Skills> Skills { get; } = new List<Skills>();
+        public Note? Note { get; set; }
+        public ICollection<Skill> Skills { get; } = new List<Skill>();
         public ICollection<Item> Items { get; } = new List<Item>();
         public int UserId { get; set; }
         public User User { get; set; } = null!;

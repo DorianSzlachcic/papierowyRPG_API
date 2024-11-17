@@ -1,6 +1,6 @@
 ﻿namespace papierowyRPG_API.Models
 {
-    public class Skills
+    public class Skill
     {
         public int ID { get; set; }
         public string Name { get; set; }
