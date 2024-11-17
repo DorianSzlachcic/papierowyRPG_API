@@ -1,4 +1,5 @@
-﻿using papierowyRPG_API.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using papierowyRPG_API.Database;
 using papierowyRPG_API.Models;
 
 namespace papierowyRPG_API.Services
@@ -36,6 +37,20 @@ namespace papierowyRPG_API.Services
                 return null;
             if (user.Password != password)
                 return null;
+            return user;
+        }
+
+        public User? RegisterUser(User user)
+        {
+            userContext.Users.Add(user);
+            try
+            {
+                userContext.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                return null;
+            }
             return user;
         }
     }

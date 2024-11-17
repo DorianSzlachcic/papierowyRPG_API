@@ -10,6 +10,11 @@ namespace papierowyRPG_API.Controllers
         public string Username { get; set; }
         public string Password { get; set; }
     }
+
+    public class RegisterForm : LoginForm
+    {
+        public string Email { get; set; }
+    }
     
     [Route("api/users")]
     [ApiController]
@@ -23,18 +28,33 @@ namespace papierowyRPG_API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType<User>(StatusCodes.Status200OK)]
-        public List<User> Get()
+        [ProducesResponseType<List<User>>(StatusCodes.Status200OK)]
+        public IActionResult Get()
         {
-            return userService.GetUsers();
+            return Ok(userService.GetUsers());
         }
 
         [HttpPost("login")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType<User>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Login([FromBody] LoginForm loginForm)
+        public IActionResult Login([FromForm] LoginForm loginForm)
         {
             User? user = userService.AuthenticateUser(loginForm.Username, loginForm.Password);
+            return user == null ? Unauthorized() : Ok(user);
+        }
+
+        [HttpPost("register")]
+        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult Register([FromForm] RegisterForm registerForm)
+        {
+            User newUser = new User
+            {
+                Username = registerForm.Username,
+                Password = registerForm.Password,
+                Email = registerForm.Email
+            };
+            User? user = userService.RegisterUser(newUser);
             return user == null ? Unauthorized() : Ok(user);
         }
     }
