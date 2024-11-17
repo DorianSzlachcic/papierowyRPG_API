@@ -46,5 +46,14 @@ namespace papierowyRPG_API.Controllers
             User? user = userService.RegisterUser(newUser);
             return user == null ? Unauthorized() : Ok(user);
         }
+
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public IActionResult Login([FromBody] LoginForm loginForm)
+        {
+            User? user = userService.AuthenticateUser(loginForm.Username, loginForm.Password);
+            return user == null ? Unauthorized() : Ok(user);
+        }
     }
 }
