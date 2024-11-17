@@ -3,9 +3,9 @@
     public class Stats
     {
         public int ID { get; set; }
-        public Character Character { get; set; } = null!;
-        public Skills Skills { get; set; } = null!;
-        public Items Items{ get; set; } = null!;
-        public string[] stats { get; set; }
+        public Character? Character { get; set; }
+        public Skills? Skills { get; set; }
+        public Item? Items{ get; set; }
+        public int[] stats { get; set; }
     }
 }

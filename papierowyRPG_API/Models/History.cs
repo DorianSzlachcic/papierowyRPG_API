@@ -5,7 +5,7 @@
         public int ID { get; set; }
         public int Number { get; set; }
         public string Note { get; set; }
-        public int id_g {  get; set; }
+        public int GameId {  get; set; }
         public Game Game { get; set; } = null!;
     }
 }
