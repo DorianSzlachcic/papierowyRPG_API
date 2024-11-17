@@ -32,7 +32,7 @@ namespace papierowyRPG_API.Controllers
         [HttpPost("login")]
         [ProducesResponseType<User>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Login([FromBody] LoginForm loginForm)
+        public IActionResult Login([FromForm] LoginForm loginForm)
         {
             User? user = userService.AuthenticateUser(loginForm.Username, loginForm.Password);
             return user == null ? Unauthorized() : Ok(user);
@@ -41,7 +41,7 @@ namespace papierowyRPG_API.Controllers
         [HttpPost("register")]
         [ProducesResponseType<User>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult Register([FromBody] User newUser)
+        public IActionResult Register([FromForm] User newUser)
         {
             User? user = userService.RegisterUser(newUser);
             return user == null ? Unauthorized() : Ok(user);
