@@ -7,14 +7,14 @@ namespace papierowyRPG_API.Database
     {
         public DbSet<User> Users { get; set; }
 
-        public string DbPath;
+        private string dbPath;
 
         public UserContext()
         {
-            DbPath = "sqlite.db";
+            dbPath = "sqlite.db";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite($"Data Source={DbPath}");
+            => optionsBuilder.UseSqlite($"Data Source={dbPath}");
     }
 }

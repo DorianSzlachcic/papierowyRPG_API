@@ -4,14 +4,9 @@ using papierowyRPG_API.Models;
 
 namespace papierowyRPG_API.Services
 {
-    public class UserService
+    public class UserService : IUserService, IDisposable
     {
-        private UserContext userContext;
-
-        public UserService()
-        {
-            userContext = new UserContext();
-        }
+        private UserContext userContext = new();
 
         public List<User> GetUsers()
         {
@@ -52,6 +47,20 @@ namespace papierowyRPG_API.Services
                 return null;
             }
             return user;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                userContext.Dispose();
+            }
         }
     }
 }

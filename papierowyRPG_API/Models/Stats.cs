@@ -5,7 +5,7 @@
         public int ID { get; set; }
         public Character? Character { get; set; }
         public Skill? Skill { get; set; }
-        public Item? Items{ get; set; }
-        public int[] StatValues { get; set; }
+        public Item? Items { get; set; }
+        public required int[] StatValues { get; set; }
     }
 }
