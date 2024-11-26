@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using papierowyRPG_API.Models;
 using papierowyRPG_API.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace papierowyRPG_API.Controllers
 {
