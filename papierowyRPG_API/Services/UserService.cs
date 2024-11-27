@@ -1,13 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 using papierowyRPG_API.Database;
 using papierowyRPG_API.Models;
 
 namespace papierowyRPG_API.Services
 {
-    public class UserService : IUserService, IDisposable
+    public class UserService(UserContext userContext) : IUserService, IDisposable
     {
-        private UserContext userContext = new();
-
         public List<User> GetUsers()
         {
             return userContext.Users.ToList();
@@ -55,7 +54,7 @@ namespace papierowyRPG_API.Services
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposing)
             {
