@@ -1,32 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using papierowyRPG_API.Models;
 using papierowyRPG_API.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace papierowyRPG_API.Controllers
 {
     public class LoginForm
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public required string Username { get; set; }
+        public required string Password { get; set; }
     }
 
     public class RegisterForm : LoginForm
     {
-        public string Email { get; set; }
+        public required string Email { get; set; }
     }
-    
+
     [Route("api/users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IUserService userService) : ControllerBase
     {
-        private readonly UserService userService;
-
-        public UserController()
-        {
-            userService = new UserService();
-        }
-
         [HttpGet]
         [ProducesResponseType<List<User>>(StatusCodes.Status200OK)]
         public IActionResult Get()

@@ -10,11 +10,11 @@
         public User User { get; set; } = null!;
         public int GameId { get; set; }
         public Game Game { get; set; } = null!;
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Story { get; set; }
+        public required string Name { get; set; }
+        public required string Description { get; set; }
+        public required string Story { get; set; }
         public int StatsId { get; set; }
-        public Stats Stats { get; set; }
+        public required Stats Stats { get; set; }
 
     }
 }
