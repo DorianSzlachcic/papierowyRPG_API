@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using papierowyRPG_API.Database;
+using papierowyRPG_API.Forms;
 using papierowyRPG_API.Models;
 
 namespace papierowyRPG_API.Services
@@ -10,6 +10,18 @@ namespace papierowyRPG_API.Services
         public List<User> GetUsers()
         {
             return userContext.Users.ToList();
+        }
+
+        public User? GetUser(int userId)
+        {
+            try
+            {
+                return userContext.Users.First(x => x.ID == userId);
+            }
+            catch (InvalidOperationException)  // User is not found
+            {
+                return null;
+            }
         }
 
         private User? GetUser(string username)
@@ -24,18 +36,19 @@ namespace papierowyRPG_API.Services
             }
         }
 
-        public User? AuthenticateUser(string username, string password)
+        public User? AuthenticateUser(LoginForm loginForm)
         {
-            var user = GetUser(username);
+            var user = GetUser(loginForm.Username);
             if (user == null)
                 return null;
-            if (user.Password != password)
+            if (user.Password != loginForm.Password)
                 return null;
             return user;
         }
 
-        public User? RegisterUser(User user)
+        public User? RegisterUser(RegisterForm registerForm)
         {
+            var user = registerForm.ToUser();
             userContext.Users.Add(user);
             try
             {
