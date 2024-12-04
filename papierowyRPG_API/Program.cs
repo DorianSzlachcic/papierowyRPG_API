@@ -1,44 +1,53 @@
 using papierowyRPG_API.Database;
 using papierowyRPG_API.Services;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<UserContext>();
-builder.Services.AddScoped<IUserService, UserService>();
-
-// Add services to the container.
-builder.Services.AddControllers();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-string AllowAllOrigins = "AllowAllOrigins";
-
-builder.Services.AddCors(options =>
+namespace papierowyRPG_API
 {
-    options.AddPolicy(name: AllowAllOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins("*");
-                      });
-});
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+            builder.Services.AddDbContext<UserContext>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+            // Add services to the container.
+            builder.Services.AddControllers();
+
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            string AllowAllOrigins = "AllowAllOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowAllOrigins,
+                    policy =>
+                    {
+                        policy.WithOrigins("*");
+                    });
+            });
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseCors(AllowAllOrigins);
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseCors(AllowAllOrigins);
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

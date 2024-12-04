@@ -1,20 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using papierowyRPG_API.Forms;
 using papierowyRPG_API.Models;
 using papierowyRPG_API.Services;
 
 namespace papierowyRPG_API.Controllers
 {
-    public class LoginForm
-    {
-        public required string Username { get; set; }
-        public required string Password { get; set; }
-    }
-
-    public class RegisterForm : LoginForm
-    {
-        public required string Email { get; set; }
-    }
-
     [Route("api/users")]
     [ApiController]
     public class UserController(IUserService userService) : ControllerBase
@@ -26,28 +16,33 @@ namespace papierowyRPG_API.Controllers
             return Ok(userService.GetUsers());
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Get(int id)
+        {
+            var user = userService.GetUser(id);
+            return user != null ? Ok(user) : NotFound();
+        }
+
         [HttpPost("login")]
-        [ProducesResponseType<User>(StatusCodes.Status200OK)]
+        [ProducesResponseType<User>(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult Login([FromForm] LoginForm loginForm)
         {
-            User? user = userService.AuthenticateUser(loginForm.Username, loginForm.Password);
-            return user == null ? Unauthorized() : Ok(user);
+            User? user = userService.AuthenticateUser(loginForm);
+            return user == null ? Unauthorized() : Accepted(user);
         }
 
         [HttpPost("register")]
-        [ProducesResponseType<User>(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType<User>(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public IActionResult Register([FromForm] RegisterForm registerForm)
         {
-            User newUser = new User
-            {
-                Username = registerForm.Username,
-                Password = registerForm.Password,
-                Email = registerForm.Email
-            };
-            User? user = userService.RegisterUser(newUser);
-            return user == null ? Unauthorized() : Ok(user);
+            User? user = userService.RegisterUser(registerForm);
+            return user != null ?
+                CreatedAtAction(nameof(Get), new { id = user.ID }, user.ID) :
+                UnprocessableEntity();
         }
     }
 }
