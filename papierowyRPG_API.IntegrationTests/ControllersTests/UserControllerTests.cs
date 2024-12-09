@@ -55,12 +55,12 @@ public class UserControllerTests
     [Fact]
     public async Task LoginAsync_ReturnsUser()
     {
-        var registerForm = new LoginForm() { Username = "johndoe", Password = "abcdefg" };
+        var loginForm = new LoginForm() { Username = "johndoe", Password = "abcdefg" };
         var loggedUser = new User
         {
             ID = 1,
-            Username = registerForm.Username,
-            Password = registerForm.Password,
+            Username = loginForm.Username,
+            Password = loginForm.Password,
             Email = "abc@def.com",
         };
 
@@ -69,8 +69,8 @@ public class UserControllerTests
             .Returns(loggedUser);
 
         var formData = new MultipartFormDataContent();
-        formData.Add(new StringContent(registerForm.Username), "Username");
-        formData.Add(new StringContent(registerForm.Password), "Password");
+        formData.Add(new StringContent(loginForm.Username), "Username");
+        formData.Add(new StringContent(loginForm.Password), "Password");
 
         var response = await client.PostAsync("/api/users/login", formData);
         response.EnsureSuccessStatusCode();
