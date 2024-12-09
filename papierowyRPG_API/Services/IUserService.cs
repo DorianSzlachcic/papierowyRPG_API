@@ -1,10 +1,12 @@
-﻿using papierowyRPG_API.Models;
+﻿using papierowyRPG_API.Forms;
+using papierowyRPG_API.Models;
 
 namespace papierowyRPG_API.Services;
 
 public interface IUserService
 {
     public List<User> GetUsers();
-    public User? AuthenticateUser(string username, string password);
-    public User? RegisterUser(User user);
+    public User? GetUser(int userId);
+    public User? AuthenticateUser(LoginForm loginForm);
+    public User? RegisterUser(RegisterForm registerForm);
 }
