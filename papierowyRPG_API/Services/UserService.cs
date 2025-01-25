@@ -24,7 +24,7 @@ namespace papierowyRPG_API.Services
             }
         }
 
-        private User? GetUser(string username)
+        public User? GetUser(string username)
         {
             try
             {

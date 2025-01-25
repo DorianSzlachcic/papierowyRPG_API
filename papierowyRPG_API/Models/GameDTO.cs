@@ -7,6 +7,7 @@
         public bool IsActive { get; set; }
         public string Ruleset { get; set; } = null!;
         public int PlayerAmount { get; set; }
+        public string GameMaster { get; set; } = null!;
 
     }
 }
