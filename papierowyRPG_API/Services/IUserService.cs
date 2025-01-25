@@ -9,4 +9,5 @@ public interface IUserService
     public User? GetUser(int userId);
     public User? AuthenticateUser(LoginForm loginForm);
     public User? RegisterUser(RegisterForm registerForm);
+    public bool? DeleteUser(int userId);
 }
