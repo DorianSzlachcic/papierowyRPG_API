@@ -44,8 +44,7 @@ namespace papierowyRPG_API.Services
                 userros.GetUser(player4)
             };
 
-            if (players.Any(p => p == null))
-                return null;
+            
 
             List<int> statValues;
             switch (game.StatsTypeJSON)
