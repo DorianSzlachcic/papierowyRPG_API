@@ -25,5 +25,14 @@ namespace papierowyRPG_API.Controllers
             var test = gameService.CreateGame(name, ruleset, gameMaster, player1, player2, player3, player4);
             return test == null ? BadRequest() : Ok(test);
         }
+
+        [HttpGet("games")]
+        [ProducesResponseType<List<GameDTO>>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Games(string name)
+        {
+            var test = gameService.GetGamesForPlayer(name);
+            return test == null ? BadRequest() : Ok(test);
+        }
     }
 }

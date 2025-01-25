@@ -12,6 +12,7 @@ namespace papierowyRPG_API.Database
         public DbSet<Note> Notes { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Stats> Stats { get; set; }
+        public DbSet<Character> Characters { get; set; }
 
         private string dbPath;
 

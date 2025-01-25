@@ -21,6 +21,42 @@ namespace papierowyRPG_API.Services
             
         }
 
+        public List<GameDTO>? GetGamesForPlayer(string name)
+        {
+            UserService service = new UserService(context);
+            var user = service.GetUser(name);
+
+            
+            var games = from character in context.Characters
+                        where character.User == user
+                        select character.Game;
+
+            
+            List<GameDTO> returnable = games
+                .Select(game => new GameDTO
+                {
+                    Id = game.ID,
+                    Name = game.Name,
+                    IsActive = game.IsActive,
+                    Ruleset = game.StatsTypeJSON, 
+                    PlayerAmount = game.Character.Count(), 
+                    GameMaster = game.GameMaster.Username
+                })
+                .ToList();
+            returnable.AddRange(context.Games.Where(x => x.GameMaster == user).Select(game => new GameDTO
+            {
+                Id = game.ID,
+                Name = game.Name,
+                IsActive = game.IsActive,
+                Ruleset = game.StatsTypeJSON,
+                PlayerAmount = game.Character.Count(),
+                GameMaster = game.GameMaster.Username
+            })
+                .ToList());
+
+
+            return returnable;
+        }
 
         public bool? CreateGame(string name, string ruleset, string gameMaster, string player1, string player2, string player3, string player4)
         {
