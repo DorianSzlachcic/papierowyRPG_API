@@ -48,7 +48,7 @@ namespace papierowyRPG_API.Controllers
         [HttpPost("character")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult EditCharacter(Character character)
+        public IActionResult EditCharacter([FromForm] Character character)
         {
             var edited = characterService.EditCharacter(character);
             return edited ? Ok() : BadRequest();
