@@ -24,7 +24,7 @@ namespace papierowyRPG_API.Services
             }
         }
 
-        private User? GetUser(string username)
+        public User? GetUser(string username)
         {
             try
             {
@@ -59,6 +59,15 @@ namespace papierowyRPG_API.Services
                 return null;
             }
             return user;
+        }
+
+        public bool? DeleteUser(int userId)
+        {
+            var user = GetUser(userId);
+            if (user == null) return null;
+            userContext.Users.Remove(user);
+            try { userContext.SaveChanges(); } catch { return null; }
+            return true;
         }
 
         public void Dispose()

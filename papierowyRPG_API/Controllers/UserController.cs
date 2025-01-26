@@ -9,6 +9,7 @@ namespace papierowyRPG_API.Controllers
     [ApiController]
     public class UserController(IUserService userService) : ControllerBase
     {
+
         [HttpGet]
         [ProducesResponseType<List<User>>(StatusCodes.Status200OK)]
         public IActionResult Get()
@@ -43,6 +44,14 @@ namespace papierowyRPG_API.Controllers
             return user != null ?
                 CreatedAtAction(nameof(Get), new { id = user.ID }, user.ID) :
                 UnprocessableEntity();
+        }
+
+        [HttpGet("delete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Delete(int id) 
+        {
+            return userService.DeleteUser(id) == null ? BadRequest() : Ok();
         }
     }
 }
