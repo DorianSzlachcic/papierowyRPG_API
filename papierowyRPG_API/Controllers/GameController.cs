@@ -48,10 +48,24 @@ namespace papierowyRPG_API.Controllers
         [HttpPost("character")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult EditCharacter([FromForm] Character character)
+        public IActionResult EditCharacter([FromForm] CharacterDTO character)
         {
-            var edited = characterService.EditCharacter(character);
-            return edited ? Ok() : BadRequest();
+            var characterEntity = characterService.GetCharacter(character.Id, character.GameId);
+            if (characterEntity == null)
+                return BadRequest();
+            characterEntity.Name = character.Name;
+            characterEntity.Description = character.Description;
+            characterEntity.Stats.StatValues = character.Stats;
+            characterEntity.Story = character.Story;
+            if (character.NewItem != null)
+                characterEntity.Items.Add(new Item {Character = characterEntity, CharacterId = characterEntity.ID, Description = character.NewItem.Description, Name = character.NewItem.Name, Stats = new Stats {StatValues = character.NewItem.Stats}});
+            if (character.NewSkill != null)
+                characterEntity.Skills.Add(new Skill {Character = characterEntity, CharacterId = characterEntity.ID, Description = character.NewSkill.Description, Name = character.NewSkill.Name, Stats = new Stats {StatValues = character.NewSkill.Stats}});
+            if (character.NewNote != null)
+                characterEntity.Notes.Add(new Note {Character = characterEntity, CharacterId = characterEntity.ID, Text = character.NewNote});
+            
+            var edited = characterService.EditCharacter(characterEntity);
+            return edited ? Ok(characterEntity) : BadRequest();
         }
     }
 }
