@@ -4,6 +4,6 @@ namespace papierowyRPG_API.Services;
 
 public interface ICharacterService
 {
-    public 
+    public Character? GetCharacter(int UserId, int GameId);
     public bool EditCharacter(Character character);
 }

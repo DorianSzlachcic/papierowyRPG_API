@@ -39,10 +39,10 @@ namespace papierowyRPG_API.Controllers
         [HttpGet("character")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetCharacterForPlayer(Character character)
+        public IActionResult GetCharacterForPlayer(int UserId, int GameId)
         {
-            var edited = characterService.EditCharacter(character);
-            return edited ? Ok() : NotFound();
+            var character = characterService.GetCharacter(UserId, GameId);
+            return character != null ? Ok(character) : NotFound();
         }
         
         [HttpPost("character")]
