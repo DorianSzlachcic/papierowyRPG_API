@@ -7,7 +7,7 @@ namespace papierowyRPG_API.Controllers
 {
     [Route("api/games")]
     [ApiController]
-    public class GameController(IGameService gameService) : ControllerBase
+    public class GameController(IGameService gameService, ICharacterService characterService) : ControllerBase
     {
         [HttpGet]
         [ProducesResponseType<List<GameDTO>>(StatusCodes.Status200OK)]
@@ -34,6 +34,24 @@ namespace papierowyRPG_API.Controllers
         {
             var test = gameService.GetGamesForPlayer(name);
             return test == null ? BadRequest() : Ok(test);
+        }
+
+        [HttpGet("character")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetCharacterForPlayer(Character character)
+        {
+            var edited = characterService.EditCharacter(character);
+            return edited ? Ok() : NotFound();
+        }
+        
+        [HttpPost("character")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult EditCharacter(Character character)
+        {
+            var edited = characterService.EditCharacter(character);
+            return edited ? Ok() : BadRequest();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace papierowyRPG_API
             builder.Services.AddDbContext<UserContext>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IGameService, GameService>();
+            builder.Services.AddScoped<ICharacterService, CharacterService>();
 
             // Add services to the container.
             builder.Services.AddControllers();
